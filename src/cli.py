@@ -1,4 +1,10 @@
-from db import save_weather_to_db, delete_weather_by_city, get_all_weather, search_city_weather
+from db import (
+    save_weather_to_db,
+    delete_weather_by_city,
+    get_all_weather,
+    search_city_weather,
+)
+
 
 def menu():
     while True:
@@ -30,7 +36,9 @@ def menu():
             city = input("Введите название города для поиска: ")
             result = search_city_weather(city)
             if result:
-                print(f"{result[0]}: {result[1]}°C, {result[2]}, обновлено: {result[3]}")
+                print(
+                    f"{result[0]}: {result[1]}°C, {result[2]}, обновлено: {result[3]}"
+                )
             else:
                 print("Город не найден.")
         elif choice == "0":
@@ -38,6 +46,7 @@ def menu():
             break
         else:
             print("Неверный выбор.")
+
 
 if __name__ == "__main__":
     menu()

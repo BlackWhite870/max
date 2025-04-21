@@ -1,5 +1,6 @@
 import sys
 import os
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 
 import unittest
@@ -7,6 +8,7 @@ from unittest.mock import patch
 from integration import get_and_save_weather  # ← без "src."
 import logging
 import time
+
 
 class TestIntegrationWeather(unittest.TestCase):
     def setUp(self):
@@ -18,7 +20,7 @@ class TestIntegrationWeather(unittest.TestCase):
         mock_get.return_value = {
             "city": "Almaty",
             "temperature": 12.5,
-            "description": "ясно"
+            "description": "ясно",
         }
 
         result = get_and_save_weather("Almaty", self.api_key)
@@ -43,6 +45,7 @@ class TestIntegrationWeather(unittest.TestCase):
         with open("error.log", "r", encoding="utf-8") as f:
             logs = f.read()
             self.assertIn("Ошибка при получении и сохранении погоды", logs)
+
 
 if __name__ == "__main__":
     unittest.main()

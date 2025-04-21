@@ -5,6 +5,7 @@ from db import save_weather_to_db
 
 API_KEY = "4efc62592ed42d49e71229ad7cc4c032"
 
+
 def show_weather():
     city = entry.get()
     if not city:
@@ -16,7 +17,9 @@ def show_weather():
         result = f"Погода в {weather['city']}:\n{weather['temperature']}°C, {weather['description']}"
         output_label.config(text=result)
 
-        save_weather_to_db(weather['city'], weather['temperature'], weather['description'])
+        save_weather_to_db(
+            weather["city"], weather["temperature"], weather["description"]
+        )
 
     except ValueError as e:
         output_label.config(text="")

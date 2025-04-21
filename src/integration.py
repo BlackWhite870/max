@@ -10,10 +10,13 @@ if not logger.handlers:
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
+
 def get_and_save_weather(city, api_key):
     try:
         weather = get_weather(city, api_key)
-        save_weather_to_db(weather["city"], weather["temperature"], weather["description"])
+        save_weather_to_db(
+            weather["city"], weather["temperature"], weather["description"]
+        )
         return True
     except Exception as e:
         logger.error(f"Ошибка при получении и сохранении погоды: {e}")

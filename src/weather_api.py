@@ -11,14 +11,10 @@ if not logger.handlers:
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
 
+
 def get_weather(city: str, api_key: str) -> dict:
     base_url = "https://api.openweathermap.org/data/2.5/weather"
-    params = {
-        "q": city,
-        "appid": api_key,
-        "units": "metric",
-        "lang": "ru"
-    }
+    params = {"q": city, "appid": api_key, "units": "metric", "lang": "ru"}
 
     try:
         response = requests.get(base_url, params=params)
@@ -32,7 +28,7 @@ def get_weather(city: str, api_key: str) -> dict:
         return {
             "city": data["name"],
             "temperature": data["main"]["temp"],
-            "description": data["weather"][0]["description"]
+            "description": data["weather"][0]["description"],
         }
 
     except requests.exceptions.HTTPError as http_err:

@@ -6,8 +6,9 @@ import time
 import sys
 
 # Добавляем путь к src/
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 import weather_api  # теперь импорт работает точно
+
 
 class TestWeatherAPI(unittest.TestCase):
     def setUp(self):
@@ -20,7 +21,7 @@ class TestWeatherAPI(unittest.TestCase):
             "name": "Almaty",
             "main": {"temp": 12.5},
             "weather": [{"description": "ясно"}],
-            "cod": 200
+            "cod": 200,
         }
 
         result = weather_api.get_weather("Almaty", self.api_key)
@@ -31,8 +32,13 @@ class TestWeatherAPI(unittest.TestCase):
     @patch("weather_api.requests.get")
     def test_city_not_found(self, mock_get):
         mock_get.return_value.status_code = 404
-        mock_get.return_value.json.return_value = {"cod": "404", "message": "city not found"}
-        mock_get.return_value.raise_for_status.side_effect = weather_api.requests.exceptions.HTTPError("404")
+        mock_get.return_value.json.return_value = {
+            "cod": "404",
+            "message": "city not found",
+        }
+        mock_get.return_value.raise_for_status.side_effect = (
+            weather_api.requests.exceptions.HTTPError("404")
+        )
 
         with self.assertRaises(ValueError) as context:
             weather_api.get_weather("UnknownCity", self.api_key)
@@ -40,7 +46,9 @@ class TestWeatherAPI(unittest.TestCase):
 
     @patch("weather_api.requests.get")
     def test_network_error_logs(self, mock_get):
-        mock_get.side_effect = weather_api.requests.exceptions.RequestException("Ошибка соединения")
+        mock_get.side_effect = weather_api.requests.exceptions.RequestException(
+            "Ошибка соединения"
+        )
 
         # Удаляем лог, если есть
         logging.shutdown()
@@ -60,5 +68,6 @@ class TestWeatherAPI(unittest.TestCase):
             logs = f.read()
             self.assertIn("Ошибка сети", logs)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
